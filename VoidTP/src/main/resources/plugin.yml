@@ -1,0 +1,4 @@
+name: ${project.name}
+version: ${project.version}
+description: ${project.description}
+main: net.md_5.VoidTP

@@ -28,6 +28,7 @@
     <modules>
         <module>EmeraldSword</module>
         <module>PrefixTags</module>
+        <module>VoidTP</module>
     </modules>
 
     <properties>
