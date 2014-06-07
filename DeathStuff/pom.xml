@@ -9,12 +9,12 @@
     </parent>
 
     <groupId>net.md_5</groupId>
-    <artifactId>VoidTP</artifactId>
+    <artifactId>DeathStuff</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>VoidTP</name>
-    <description>Executes a command such as /home or /spawn when a player gets damaged by the void.</description>
+    <name>DeathStuff</name>
+    <description>Does stuff to players during death / PvP.</description>
 
     <dependencies>
         <dependency>
@@ -22,11 +22,6 @@
             <artifactId>bukkit</artifactId>
             <version>${bukkit.version}</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.7.9-R0.2-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

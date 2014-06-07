@@ -26,6 +26,7 @@
     </repositories>
 
     <modules>
+    	<module>DeathStuff</module>
         <module>EmeraldSword</module>
         <module>PrefixTags</module>
         <module>VoidTP</module>
@@ -33,7 +34,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <bukkit.version>1.7.2-R0.3</bukkit.version>
+        <bukkit.version>1.7.9-R0.2</bukkit.version>
+        <bungee.version>1.7-SNAPSHOT</bungee.version>
     </properties>
 
     <build>
