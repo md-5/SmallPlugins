@@ -27,6 +27,7 @@
 
     <modules>
     	<module>DeathStuff</module>
+    	<module>DropPart</module>
         <module>EmeraldSword</module>
         <module>PrefixTags</module>
         <module>VoidTP</module>

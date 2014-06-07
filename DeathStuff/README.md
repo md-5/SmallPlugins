@@ -1,4 +1,4 @@
 DeathStuff
 ==========
 
-oes stuff to players during death / PvP.
+Does stuff to players during death / PvP.
