@@ -8,15 +8,14 @@ import java.util.logging.Level;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class DropParty extends JavaPlugin implements Listener
+public class DropParty extends JavaPlugin
 {
 
     private final Random random = new Random();
-    private List<Material> dropItems = new ArrayList<Material>();
+    private final List<Material> dropItems = new ArrayList<Material>();
 
     @Override
     public void onEnable()
