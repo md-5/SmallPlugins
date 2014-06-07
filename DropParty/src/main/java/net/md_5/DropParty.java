@@ -15,7 +15,7 @@ public class DropParty extends JavaPlugin
 {
 
     private final Random random = new Random();
-    private final List<Material> dropItems = new ArrayList<Material>();
+    private final List<ItemStack> dropItems = new ArrayList<ItemStack>();
 
     @Override
     public void onEnable()
@@ -33,12 +33,16 @@ public class DropParty extends JavaPlugin
 
         for ( String s : getConfig().getStringList( "items" ) )
         {
-            Material m = Material.matchMaterial( s );
-            if ( m == null )
+            String[] split = s.split( ":", 2 );
+            String name = split[0];
+            int amount = split.length > 1 ? Integer.parseInt( split[1] ) : 1;
+
+            Material material = Material.matchMaterial( name );
+            if ( material == null )
             {
-                getLogger().log( Level.WARNING, "Could not find material {0}", s );
+                getLogger().log( Level.WARNING, "Could not find material {0}", name );
             }
-            dropItems.add( m );
+            dropItems.add( new ItemStack( material, amount ) );
         }
 
         int intervalTicks = getConfig().getInt( "interval" ) * 60 * 20;
@@ -101,7 +105,7 @@ public class DropParty extends JavaPlugin
             Player player = online[random.nextInt( online.length )];
 
             player.sendMessage( ChatColor.translateAlternateColorCodes( '&', getConfig().getString( "give_message" ) ) );
-            player.getInventory().addItem( new ItemStack( dropItems.get( random.nextInt( dropItems.size() ) ), 1 ) );
+            player.getInventory().addItem( dropItems.get( random.nextInt( dropItems.size() ) ) );
         }
     }
 }
