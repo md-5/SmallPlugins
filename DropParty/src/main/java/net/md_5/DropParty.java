@@ -66,6 +66,13 @@ public class DropParty extends JavaPlugin
         public PartyTime()
         {
             int playersToGet = (int) Math.round( getServer().getOnlinePlayers().length * getConfig().getDouble( "ratio" ) );
+
+            if ( playersToGet <= 0 )
+            {
+                taskId = 0;
+                return;
+            }
+
             while ( playersToGet > getConfig().getInt( "duration" ) / 2 )
             {
                 playersToGet /= 2;
