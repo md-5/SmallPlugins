@@ -69,8 +69,11 @@ public class StickyMob extends JavaPlugin implements Runnable
                     (float) mobSection.getDouble( "yaw" ), (float) mobSection.getDouble( "pitch" ) );
 
             Entity spawned = world.spawnEntity( loc, entityType );
-            mobSection.set( "uuid", spawned.getUniqueId().toString() );
+            String spawnedId = spawned.getUniqueId().toString();
+            mobSection.set( "uuid", spawnedId );
             saveConfig();
+
+            getLogger().info( "Successfully spawned a " + entityType + " with UUID " + spawnedId + " at " + loc );
         }
     }
 }
