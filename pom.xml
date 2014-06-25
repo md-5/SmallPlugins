@@ -30,6 +30,7 @@
     	<module>DropPart</module>
         <module>EmeraldSword</module>
         <module>PrefixTags</module>
+        <module>StickyMob</module>
         <module>VoidTP</module>
     </modules>
 
