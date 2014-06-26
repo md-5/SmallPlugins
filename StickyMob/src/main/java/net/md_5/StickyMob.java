@@ -15,11 +15,11 @@ public class StickyMob extends JavaPlugin implements Runnable
     {
         getConfig().addDefault( "mobs.wither-gate.world", "world" );
         getConfig().addDefault( "mobs.wither-gate.mob", "WITHER" );
-        getConfig().addDefault( "mobs.wither-gate.x", "0" );
-        getConfig().addDefault( "mobs.wither-gate.y", "64" );
-        getConfig().addDefault( "mobs.wither-gate.z", "0" );
-        getConfig().addDefault( "mobs.wither-gate.yaw", "0" );
-        getConfig().addDefault( "mobs.wither-gate.pitch", "0" );
+        getConfig().addDefault( "mobs.wither-gate.x", 0 );
+        getConfig().addDefault( "mobs.wither-gate.y", 64 );
+        getConfig().addDefault( "mobs.wither-gate.z", 0 );
+        getConfig().addDefault( "mobs.wither-gate.yaw", 0 );
+        getConfig().addDefault( "mobs.wither-gate.pitch", 0 );
         getConfig().addDefault( "interval", 30 );
 
         getConfig().options().copyDefaults( true );
