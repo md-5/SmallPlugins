@@ -1,0 +1,9 @@
+name: ${project.name}
+version: ${project.version}
+description: ${project.description}
+main: net.md_5.ForgetMe
+
+permission:
+  inactive.ignore:
+    description: Do not have inactive commands run
+    default: op
