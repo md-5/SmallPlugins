@@ -1,60 +1,73 @@
 package net.md_5;
 
+import com.dsh105.holoapi.api.Hologram;
+import com.dsh105.holoapi.api.HologramFactory;
+import com.google.common.collect.Iterables;
+import java.util.List;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.entity.Ocelot;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-public class TestPlugin extends JavaPlugin
+public class TestPlugin extends JavaPlugin implements Listener
 {
 
-    private Location last;
+    private static final String META_KEY = "asgyuhkdf";
 
     @Override
     public void onEnable()
     {
-        getServer().getScheduler().runTaskTimer( this, new Runnable()
-        {
-
-            @Override
-            public void run()
-            {
-                for ( Player player : getServer().getOnlinePlayers() )
-                {
-                    if ( last == null )
-                    {
-                        last = player.getLocation();
-                    }
-
-                    Location playerLocation = player.getLocation();
-
-                    // Vector relativeAddition = posMinecraft( 15, playerLocation.getYaw(), playerLocation.getPitch() );
-                    Vector relativeAddition = rotateLocation( playerLocation.toVector(), playerLocation.clone().add( 5, 5, 5 ).toVector(), 50, 50 );
-
-                    System.out.println( relativeAddition );
-                    playerLocation.getWorld().spawn( playerLocation.add( relativeAddition ), Ocelot.class );
-                }
-            }
-        }, 5, 5 );
+        getServer().getPluginManager().registerEvents( this, this );
     }
 
-    private static Vector rotateLocation(Vector origin, Vector location, double yaw, double pitch)
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
     {
-        Vector diff = location.clone().subtract( origin );
+        Player player = (Player) sender;
 
-        double radius = diff.length();
+        Hologram holo = new HologramFactory( this ).withText( ChatColor.RED + "This is a really nice test. asuilhdasd." ).withLocation( locate( player ) ).build();
+        holo.show( player );
 
-        System.out.println( "Radius: " + radius );
+        player.setMetadata( META_KEY, new FixedMetadataValue( this, holo ) );
 
-        double oldYaw = Math.toDegrees( Math.atan2( diff.getX(), diff.getY() ) );
+        return true;
+    }
 
-        System.out.println( "Yaw: " + oldYaw );
+    private Location locate(Player player)
+    {
+        Location inFront = player.getLocation();
+        inFront.add( 0, player.getEyeHeight(), 0 );
+        inFront.add( posMinecraft( 5, inFront.getYaw(), inFront.getPitch() ) );
 
-        double oldPitch = Math.toDegrees( Math.atan2( Math.sqrt( ( diff.getX() * diff.getX() ) + ( diff.getY() * diff.getY() ) ), diff.getZ() ) );
-        System.out.println( "Pitch: " + oldPitch );
+        return inFront;
+    }
 
-        return pos(radius, oldYaw + yaw, oldPitch + pitch );
+    @EventHandler
+    public void move(PlayerMoveEvent event)
+    {
+        update( event.getPlayer() );
+    }
+
+    private void update(Player player)
+    {
+        List<MetadataValue> meta = player.getMetadata( META_KEY );
+        if ( meta == null || meta.isEmpty() )
+        {
+            return;
+        }
+
+        Hologram holo = (Hologram) Iterables.getOnlyElement( meta ).value();
+        Location inFront = locate( player );
+        player.sendMessage( inFront.toString() );
+        holo.move( inFront );
     }
 
     /**

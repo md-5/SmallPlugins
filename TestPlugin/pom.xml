@@ -18,6 +18,13 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>HoloAPI</artifactId>
+            <version>1.2.3</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/HoloAPI.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>${bukkit.version}</version>
