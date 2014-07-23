@@ -9,6 +9,8 @@ import org.bukkit.util.Vector;
 public class TestPlugin extends JavaPlugin
 {
 
+    private Location last;
+
     @Override
     public void onEnable()
     {
@@ -20,14 +22,39 @@ public class TestPlugin extends JavaPlugin
             {
                 for ( Player player : getServer().getOnlinePlayers() )
                 {
+                    if ( last == null )
+                    {
+                        last = player.getLocation();
+                    }
+
                     Location playerLocation = player.getLocation();
 
-                    Vector relativeAddition = posMinecraft( 15, playerLocation.getYaw(), playerLocation.getPitch() );
+                    // Vector relativeAddition = posMinecraft( 15, playerLocation.getYaw(), playerLocation.getPitch() );
+                    Vector relativeAddition = rotateLocation( playerLocation.toVector(), playerLocation.clone().add( 5, 5, 5 ).toVector(), 50, 50 );
 
+                    System.out.println( relativeAddition );
                     playerLocation.getWorld().spawn( playerLocation.add( relativeAddition ), Ocelot.class );
                 }
             }
         }, 5, 5 );
+    }
+
+    private static Vector rotateLocation(Vector origin, Vector location, double yaw, double pitch)
+    {
+        Vector diff = location.clone().subtract( origin );
+
+        double radius = diff.length();
+
+        System.out.println( "Radius: " + radius );
+
+        double oldYaw = Math.toDegrees( Math.atan2( diff.getX(), diff.getY() ) );
+
+        System.out.println( "Yaw: " + oldYaw );
+
+        double oldPitch = Math.toDegrees( Math.atan2( Math.sqrt( ( diff.getX() * diff.getX() ) + ( diff.getY() * diff.getY() ) ), diff.getZ() ) );
+        System.out.println( "Pitch: " + oldPitch );
+
+        return pos(radius, oldYaw + yaw, oldPitch + pitch );
     }
 
     /**
