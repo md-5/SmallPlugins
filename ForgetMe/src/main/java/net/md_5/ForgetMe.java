@@ -2,7 +2,6 @@ package net.md_5;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,6 +20,7 @@ public class ForgetMe extends JavaPlugin implements Listener, Runnable
 {
 
     private List<String> ignoredList;
+    private List<String> forgotten;
     private YamlConfiguration ignored;
     private File ignoredFile;
 
@@ -47,11 +47,9 @@ public class ForgetMe extends JavaPlugin implements Listener, Runnable
         {
             getLogger().log( Level.SEVERE, "Error loading ignored!", ex );
         }
-        if ( ignoredList == null )
-        {
-            ignoredList = new ArrayList<String>();
-        }
+
         ignoredList = ignored.getStringList( "players" );
+        forgotten = ignored.getStringList( "forgotten" );
 
         getServer().getScheduler().runTaskTimerAsynchronously( this, new Runnable()
         {
@@ -60,6 +58,7 @@ public class ForgetMe extends JavaPlugin implements Listener, Runnable
             public void run()
             {
                 ignored.set( "players", ignoredList );
+                ignored.set( "forgotten", forgotten );
                 try
                 {
                     ignored.save( ignoredFile );
@@ -82,6 +81,7 @@ public class ForgetMe extends JavaPlugin implements Listener, Runnable
                 ignoredList.add( name );
             }
         }
+        forgotten.remove( event.getPlayer().getName().toLowerCase() );
     }
 
     @Override
@@ -99,7 +99,8 @@ public class ForgetMe extends JavaPlugin implements Listener, Runnable
 
             for ( final OfflinePlayer player : getServer().getOfflinePlayers() )
             {
-                if ( ignoredList.contains( player.getName().toLowerCase() ) )
+                String lowerCaseName = player.getName().toLowerCase();
+                if ( ignoredList.contains( lowerCaseName ) || forgotten.contains( lowerCaseName ) )
                 {
                     continue;
                 }
@@ -119,6 +120,7 @@ public class ForgetMe extends JavaPlugin implements Listener, Runnable
                             }
                         } );
                     }
+                    forgotten.add( lowerCaseName );
                 }
             }
         }
